@@ -36,8 +36,8 @@ struct Recipe: Identifiable {
         )
     }
     
-    var isValid: Bool {
-        !ingredients.isEmpty && recipeInformation.isValid && !directions.isEmpty
+    var isValid: Bool {        
+        return recipeInformation.isValid && !directions.isEmpty && !ingredients.isEmpty
     }
     
 }
@@ -63,6 +63,15 @@ struct RecipeInformation {
 struct Direction {
     var description: String
     var isOptional: Bool
+    
+    init(description: String, isOptional: Bool) {
+        self.description = description
+        self.isOptional = isOptional
+    }
+    
+    init() {
+        self.init(description: "", isOptional: false)
+    }
 }
 
 
@@ -117,7 +126,7 @@ struct Ingredient {
 
 
 extension Recipe {
-    static let mockedRecipes: [Recipe] = [
+    static var mockedRecipes: [Recipe] = [
         Recipe(
             recipeInformation:
                 RecipeInformation(
@@ -153,6 +162,7 @@ extension Recipe {
                 ),
             ]
         ),
+        
         Recipe(
             recipeInformation:
                 RecipeInformation(
@@ -297,6 +307,7 @@ extension Recipe {
                 ),
             ]
         ),
+        
         Recipe(
             recipeInformation:
                 RecipeInformation(
@@ -440,6 +451,7 @@ extension Recipe {
                 ),
             ]
         ),
+        
         Recipe(
             recipeInformation:
                 RecipeInformation(

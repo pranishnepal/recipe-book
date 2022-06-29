@@ -89,12 +89,17 @@ struct RecipeListView: View {
                                 ToolbarItem(
                                     placement: .confirmationAction,
                                     content: {
-                                        Button("Add") {
-                                            if newRecipe.isValid {
-                                                recipeViewModel.addNewRecipe(recipe: newRecipe)
-                                                isPresentingSheet = false
+                                        Button(
+                                            action: {
+                                                if newRecipe.isValid {
+                                                    recipeViewModel.addNewRecipe(recipe: newRecipe)
+                                                    isPresentingSheet = false
+                                                }
+                                            },
+                                            label: {
+                                                Text("Add")
                                             }
-                                        }
+                                        )
                                     }
                                 )
                             }
