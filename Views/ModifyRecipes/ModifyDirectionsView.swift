@@ -25,9 +25,8 @@ struct ModifyDirectionsView: View {
                 Spacer()
             } else {
                 HStack {
-                    Text("Ingredients")
+                    Text("Directions")
                         .font(.title)
-                        .bold()
                         .padding()
                     
                     Spacer()
@@ -36,9 +35,21 @@ struct ModifyDirectionsView: View {
                 List {
                     ForEach(directions.indices, id: \.self) { index in
                         let direction = directions[index]
-                        Text(direction.description)
-                            .listRowBackground(UIConstants.mainColor)
+                        let editDirectionView = ModifyDirectionView(
+                            direction: $directions[index]) { _ in
+                                return
+                            }.navigationTitle("Edit Directions")
+                        
+                        NavigationLink(
+                            destination: editDirectionView,
+                            label: {
+                                Text(direction.description)
+                            }
+                        )
                     }
+                    .onDelete {directions.remove(atOffsets: $0)}
+                    .onMove {indices, newOffet in directions.move(fromOffsets: indices, toOffset: newOffet)}
+                    .listRowBackground(UIConstants.mainColor)
                     
                     NavigationLink(
                         "Add another direction",

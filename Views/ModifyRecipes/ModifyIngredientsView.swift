@@ -32,9 +32,22 @@ struct ModifyIngredientsView: View {
                 List {
                     ForEach(ingredients.indices, id: \.self) { index in
                         let ingredient = ingredients[index]
-                        Text(ingredient.description)
+                        let editIngredientView = ModifyIngredientView(ingredient: $ingredients[index]) { _ in
+                            return
+                        }.navigationTitle("Edit Ingredients")
+                        
+                        NavigationLink(
+                            destination: editIngredientView,
+                            label: {
+                                Text(ingredient.description)
+                            }
+                        )
+                            
                     }
+                    .onDelete {ingredients.remove(atOffsets: $0)}
+                    .onMove {indices, newOffet in ingredients.move(fromOffsets: indices, toOffset: newOffet)}
                     .listRowBackground(UIConstants.mainColor)
+                    
                     NavigationLink(
                         "Add another Ingredient",
                         destination: addNewIngredientView

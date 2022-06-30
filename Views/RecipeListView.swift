@@ -22,7 +22,7 @@ struct RecipeListView: View {
             ForEach(recipesForASpecificCategory) { recipe in
                 NavigationLink(
                     destination: {
-                        RecipeDetailView(recipe: recipe)
+                        RecipeDetailView(recipe: getBindingForRecipe(recipe: recipe))
                     },
                     label: {
                         Text(recipe.recipeInformation.name)
@@ -47,16 +47,6 @@ struct RecipeListView: View {
                                 newRecipe = Recipe()
                                 
                                 newRecipe.recipeInformation.category = recipesForASpecificCategory[0].recipeInformation.category
-                                
-                                /* TODO: REMOVE THE FOLLOWING TEST DATA WHEN DONE
-                                    newRecipe.directions =  [
-                                        Direction(description: "sdf", isOptional: false)
-                                    ]
-                                    
-                                    newRecipe.ingredients = [
-                                        Ingredient(name: "OK", unit: .cups, quantity: 1.9)
-                                    ]
-                                */
                             },
                             label: {
                                 Image(systemName: "plus")
@@ -120,6 +110,14 @@ extension RecipeListView {
     
     var recipesForASpecificCategory: [Recipe] {
         recipeViewModel.getRecipesForACategory(category: category)
+    }
+    
+    func getBindingForRecipe(recipe: Recipe) -> Binding<Recipe> {
+        guard let recipeIdx = recipeViewModel.getIndexOfRecipe(recipe: recipe) else {
+            fatalError("Recipe does not exist")
+        }
+        
+        return $recipeViewModel.recipes[recipeIdx]
     }
 }
 

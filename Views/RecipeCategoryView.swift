@@ -43,5 +43,6 @@ struct RecipeCategoryView: View {
 struct RecipeCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeCategoryView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
     }
 }

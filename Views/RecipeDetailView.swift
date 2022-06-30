@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    let recipe: Recipe
+    @Binding var recipe: Recipe
+    
+    @State var isPresentingSheet: Bool = false
     
     var body: some View {
         VStack {
@@ -67,14 +69,53 @@ struct RecipeDetailView: View {
             
         }
         .navigationTitle(recipe.recipeInformation.name)
+        
+        /* Toolbar to edit recipe */
+        .toolbar {
+            ToolbarItem(
+                placement: .navigationBarTrailing,
+                content: {
+                    Button(
+                        action: {
+                            isPresentingSheet = true
+                        },
+                        label: {
+                            Text("Edit")
+                        }
+                    )
+                }
+            )
+        }
+        
+        /* Sheet that is displayed when edit is triggered */
+        .sheet(
+            isPresented: $isPresentingSheet,
+            content: {
+                NavigationView {
+                    ModifyRecipeView(recipe: $recipe)
+                        .toolbar {
+                            ToolbarItem(
+                                placement: .confirmationAction,
+                                content: {
+                                    Button("Save") {
+                                        isPresentingSheet = false
+                                    }
+                                }
+                            )
+                        }
+                        .navigationTitle("Edit Recipe")
+                }
+                
+            }
+        )
     }
 }
 
 struct RecipeDetailView_Previews: PreviewProvider {
-    static var mockRecipe = Recipe.mockedRecipes[0]
+    @State static var mockRecipe = Recipe.mockedRecipes[0]
     static var previews: some View {
         NavigationView {
-            RecipeDetailView(recipe: mockRecipe)
+            RecipeDetailView(recipe: $mockRecipe)
         }
     }
 }

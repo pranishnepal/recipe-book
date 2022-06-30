@@ -16,6 +16,16 @@ class RecipeViewModel: ObservableObject {
         }
     }
     
+    func getIndexOfRecipe(recipe: Recipe) -> Int? {
+        for currIdx in recipes.indices {
+            if recipe.id == recipes[currIdx].id {
+                return currIdx
+            }
+        }
+        
+        return nil
+    }
+    
     func getRecipesForACategory(category: RecipeInformation.Category) -> [Recipe] {
         var filteredRecipes = [Recipe]()
         
