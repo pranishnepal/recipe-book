@@ -29,12 +29,17 @@ struct RecipeCategoryView: View {
                                 }
                             )
                         }
+                        
                     }
+                    
                 )
             }
             .navigationTitle("Categories")
             .padding()
            
+        }
+        .onAppear {
+            recipeViewModel.loadRecipes()
         }
         
     }

@@ -9,8 +9,9 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Binding var recipe: Recipe
-    
+    @EnvironmentObject var recipeViewModel: RecipeViewModel
     @State var isPresentingSheet: Bool = false
+    
     
     var body: some View {
         VStack {
@@ -105,7 +106,9 @@ struct RecipeDetailView: View {
                         }
                         .navigationTitle("Edit Recipe")
                 }
-                
+                .onDisappear {
+                    recipeViewModel.saveRecipes()
+                }
             }
         )
     }

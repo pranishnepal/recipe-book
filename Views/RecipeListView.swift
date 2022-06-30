@@ -23,6 +23,8 @@ struct RecipeListView: View {
                 NavigationLink(
                     destination: {
                         RecipeDetailView(recipe: getBindingForRecipe(recipe: recipe))
+                            .environmentObject(recipeViewModel)
+                        
                     },
                     label: {
                         Text(recipe.recipeInformation.name)

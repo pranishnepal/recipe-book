@@ -36,18 +36,17 @@ struct WelcomeScreenView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(30)
                     
-                    Button(
-                        action: {
-                            
-                        }, label: {
+                    NavigationLink(
+                        destination: RecipeCategoryView().navigationBarHidden(true),
+                        label: {
                             HStack {
-                               
+                                
                                 Text("Get started!")
                                     .foregroundColor(UIConstants.fontColor)
                                     .bold()
-                                    
+                                
                             }
-                           
+                            
                         }
                     )
                     .padding()
